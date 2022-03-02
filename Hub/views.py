@@ -81,3 +81,28 @@ def Coach_addForm(request):
 'form':form,
 }
 )
+
+#3éme méthode par contrainte
+def Coach_addModelForm(request):
+    form= CoachModelForm()
+    if request.method=="POST":
+        form= CoachModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Hub_Coach_list')
+
+    return render(request,'Hub/Coach_add.html',
+{
+'form':form,
+}
+)
+
+#Class
+class CoachCreateView(CreateView):
+    model= Coach
+    form_class = CoachModelForm
+    template_name="Hub/Coach_add.html"
+
+class CoachUpdateView(UpdateView):
+    model=Coach
+    foem_class=CoachModelForm
