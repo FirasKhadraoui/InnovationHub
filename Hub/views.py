@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from Hub.forms import CoachForm, CoachModelForm
 from .models import Coach, Projet
+from django.views.generic import CreateView, UpdateView
 
 # Create your views here.
 def HomePage(request):
@@ -55,3 +57,27 @@ def Coach_add(request):
         return redirect('Hub_Coach_list')
 
     return render(request,'Hub/Coach_add.html')
+
+#2éme méthode (forms.py)
+def Coach_addForm(request):
+    form= CoachForm()
+    if request.method=="POST":
+        form= CoachForm(request.POST)
+        if form.is_valid():
+            firstName = form.cleaned_data.get('first_name')
+            lastName = form.cleaned_data.get('last_name')
+            email = form.cleaned_data.get('email')
+
+        Coach.objects.create(
+            fname=firstName,
+            lname= lastName,
+            email=email
+        )
+        #Coach.objects.create(**form.cleaned_data) #Remplace elli 9ablou (spread operator)
+        return redirect('Hub_Coach_list')
+
+    return render(request,'Hub/Coach_add.html',
+{
+'form':form,
+}
+)
