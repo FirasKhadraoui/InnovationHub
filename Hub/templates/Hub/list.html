@@ -1,5 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+
 <ul>
     {% for c in list_Coach %}    <!--syntaxe DTL : Django Template-->
-    <li>{{c.fname}}.{{c.lname}}</li>
+    <li>  <a href ="{% url 'Hub_Coach_details' c.id %}">{{c.fname}}.{{c.lname}}</a></li>
     {% endfor%}
 </ul>
+
+{% endblock content %}

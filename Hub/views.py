@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Coach, Projet
 
 # Create your views here.
@@ -39,3 +39,19 @@ def list_project(request) :
 # class ProjectListView(ListView) :
 #     model=Projet
 #     template_name='Hub/projet_list.html'
+
+def Coach_add(request):
+    #print(request.POST)
+    if request.method=="POST":
+        firstName = request.POST.get('firstName')
+        lastName = request.POST.get('lastName')
+        email = request.POST.get('email')
+
+        Coach.objects.create(
+            fname=firstName,
+            lname= lastName,
+            email=email
+        )
+        return redirect('Hub_Coach_list')
+
+    return render(request,'Hub/Coach_add.html')
