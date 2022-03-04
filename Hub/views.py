@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from Hub.forms import CoachForm, CoachModelForm
-from .models import Coach, Projet
+from .models import Coach, Projet, Student
 from django.views.generic import CreateView, UpdateView
 
 # Create your views here.
@@ -106,3 +106,25 @@ class CoachCreateView(CreateView):
 class CoachUpdateView(UpdateView):
     model=Coach
     foem_class=CoachModelForm
+
+
+################  Students ################
+def ListStudent(request):
+    List=Student.objects.all()
+    return render(
+        request,
+        'Hub/list_student.html',
+        {
+            'list_Student':List
+        } 
+    )
+
+def details_student(request,id):
+    student=Student.objects.get(id=id)
+    return render( 
+        request,
+        'Hub/details_student.html',
+        {
+            'student': student
+        } 
+    )

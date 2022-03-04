@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %}
+<table>
+    <tr>
+        <td> ID </td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Email  </td>
+    </tr>
+    {% for s in list_Student %}
+    <tr>
+        <td>{{ s.id }}</td>
+        <td>{{ s.fname }}</td>
+        <td>{{ s.lname }}</td>
+        <td>{{ s.email }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}
