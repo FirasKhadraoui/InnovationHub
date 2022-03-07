@@ -1,11 +1,13 @@
+from urllib import request
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from Hub.forms import CoachForm, CoachModelForm
+from Hub.forms import CoachForm, CoachModelForm, CustomUserForm
 from .models import Coach, Projet, Student
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required  #Pour les fonctions
 from django.contrib.auth.mixins import LoginRequiredMixin  #Pour les classes
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def HomePage(request):
@@ -150,3 +152,20 @@ def details_student(request,id):
             'student': student
         } 
     )
+
+def register(request):
+    form = CustomUserForm()
+
+    if request.method == "POST":
+        form= CustomUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.claned_data.get('username')
+            password = form.claned_data.get('password')
+            user= authenticate(request, username = username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect ('Hub_home')
+            else:
+                redirect('login')
+    return render(request,'hub/register.html',{'form':form})

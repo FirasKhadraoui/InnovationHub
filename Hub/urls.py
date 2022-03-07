@@ -1,6 +1,6 @@
 import imp
 from django.urls import path
-from .views import Coach_add, Coach_addForm, CoachCreateView, CoachDeleteView, CoachUpdateView, HomePage, ListCoach, ListStudent, details_coach, details_student, list_project
+from .views import Coach_add, Coach_addForm, CoachCreateView, CoachDeleteView, CoachUpdateView, HomePage, ListCoach, ListStudent, details_coach, details_student, list_project, register
 
 
 urlpatterns=[
@@ -18,4 +18,5 @@ urlpatterns=[
     path('Student/<int:id>',details_student,name="Hub_Student_details"),
     path('coachupdate/<int:pk>',CoachUpdateView.as_view(),name="Coach_update"), #pk in update & delete
     path('coachdelete/<int:pk>',CoachDeleteView.as_view(),name="Coach_delete"),
+    path('register',register,name="Hub_register"),
 ]

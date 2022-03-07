@@ -1,7 +1,7 @@
-from distutils.log import error
-import email
 from django import forms
 from .models import Coach
+from django.contrib.auth.models import User  #User de django pas notre user de .models
+from django.contrib.auth.forms import UserCreationForm
 
 class CoachForm(forms.Form):
     first_name=forms.CharField(
@@ -21,3 +21,9 @@ class CoachModelForm(forms.ModelForm):
                 'max_length':"Name too long !!!"
             }
         }
+
+class CustomUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields=['username','email']    #'__all__'
+        
