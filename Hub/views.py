@@ -4,11 +4,14 @@ from Hub.forms import CoachForm, CoachModelForm
 from .models import Coach, Projet, Student
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required  #Pour les fonctions
+from django.contrib.auth.mixins import LoginRequiredMixin  #Pour les classes
 
 # Create your views here.
 def HomePage(request):
     return HttpResponse("<h1>Welcome To ...</h1>")
 
+@login_required
 def ListCoach(request):
     List=Coach.objects.all() # select * from coach
     return render( # 3 paramétres
@@ -99,7 +102,7 @@ def Coach_addModelForm(request):
 )
 
 #Class
-class CoachCreateView(CreateView):
+class CoachCreateView(LoginRequiredMixin,CreateView): 
     model= Coach
     form_class = CoachModelForm
     template_name="Hub/Coach_add.html"
