@@ -2,7 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from Hub.forms import CoachForm, CoachModelForm
 from .models import Coach, Projet, Student
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
+from django.urls import reverse
 
 # Create your views here.
 def HomePage(request):
@@ -102,10 +103,28 @@ class CoachCreateView(CreateView):
     model= Coach
     form_class = CoachModelForm
     template_name="Hub/Coach_add.html"
+    #Par défaut template_name="{model}_form.html" #Create & Update
+    def get_success_url(self):
+        return reverse('Hub_Coach_list')  # Redirection
 
 class CoachUpdateView(UpdateView):
     model=Coach
-    foem_class=CoachModelForm
+    form_class=CoachModelForm
+    template_name="Hub/Coach_add.html"
+    # success_url = 
+    def get_success_url(self):
+        return reverse('Hub_Coach_list')
+
+class CoachDeleteView(DeleteView):
+    model=Coach
+    def get_success_url(self):
+        return reverse('Hub_Coach_list')
+
+#2éme méthode suppression sans comfirm_delete
+def delete_coach(request,id):
+    st=Student.objects.get(pk=id)
+    st.delete()
+    return redirect ('student_list')
 
 
 ################  Students ################

@@ -7,11 +7,14 @@ class User(models.Model):
     email = models.EmailField(verbose_name="Email",null=False)
     def __str__(self):
         return f"{self.fname} _ {self.lname}"
+    
 
 class Student(User):
     pass
 
 class Coach(User) :
+    # def get_absolute_url(self):
+    #     return redirect()
     pass
 
 class Projet(models.Model):
